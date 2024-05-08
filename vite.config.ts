@@ -30,6 +30,17 @@ export default defineConfig({
     },
     extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue', '.less'],
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:9004',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
   plugins: [
     vue({
       script: {

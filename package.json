@@ -29,7 +29,10 @@
     "release": "semantic-release"
   },
   "dependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "axios": "^1.6.8",
     "element-plus": "^2.7.2",
+    "lodash-es": "^4.17.21",
     "vue": "^3.4.21"
   },
   "devDependencies": {
