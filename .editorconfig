@@ -1,5 +1,6 @@
 
 root = true
+format_on_save = true
 
 [*]
 charset = utf-8

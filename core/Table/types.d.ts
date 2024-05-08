@@ -1,3 +1,5 @@
+import { VNode } from 'vue'
+
 interface BaseColumn<T> {
   type?: string
   prop: string
@@ -26,9 +28,10 @@ interface BaseColumn<T> {
   filterMultiple?: boolean
   filterClassName?: string
   index?: number | ((index: number) => number)
-  renderHeader?: (data: CI<T>) => VNode
 }
 
 export interface FTableColumn<T> extends BaseColumn<T> {
-  renderCell?: (data: any) => void
+  customHeader?: (data: CI<T>) => VNode
+  customCell?: (data: any) => VNode
+  [key: string]: any
 }
