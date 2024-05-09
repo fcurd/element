@@ -10,7 +10,6 @@
     "esModuleInterop": true,
     // 在文件名中强制使用一致的大小写
     "forceConsistentCasingInFileNames": true,
-    "allowDuplicateProperties": true,
     // 模块解析策略
     "moduleResolution": "Bundler",
     // 允许导入 JSON 模块

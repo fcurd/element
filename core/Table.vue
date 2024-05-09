@@ -4,7 +4,7 @@ import { type VNode, onMounted, ref, watchEffect, defineProps, computed, reactiv
 import { i18n } from './i18n'
 import { FTableColumn } from './types'
 import Form from './Form.vue'
-import { assign, cloneDeep } from 'lodash-es'
+import { cloneDeep } from 'lodash-es'
 
 const props = defineProps<{
   title?: string
@@ -19,11 +19,9 @@ const data = ref([])
 const formVisible = ref(false)
 const formData = ref({})
 const mode = ref('add')
-const searchFormData = reactive({})
+const searchFormData = reactive<Record<string, any>>({})
 const currentPage = ref<number>(1)
-const pagination = reactive(
-  assign({ total: 0, layout: 'prev, pager, next, total', pageSizes: [10, 20, 30, 40, 50, 100] }, props.pagination),
-)
+const pagination = reactive({ total: 0, layout: 'prev, pager, next, total', pageSizes: [10, 20, 30, 40, 50, 100], ...props.pagination })
 const pageSize = ref(10)
 
 const searchColumns = computed(() => {

@@ -20,6 +20,7 @@ import {
 } from 'element-plus'
 import { FTableColumn, SelectOption } from './types'
 import { ref, defineProps } from 'vue'
+import { get, set } from 'lodash-es'
 
 const props = defineProps<{
   formLabelPosition?: 'left' | 'right' | 'top'
@@ -31,9 +32,9 @@ const props = defineProps<{
 const formData = defineModel<Record<string, any>>('data', { required: true })
 const selectOptions = ref<SelectOption[]>([])
 
-function search(key: string, valueKey: string, query: string) {
-  props.api.getList({ [key]: query }).then((res: { data: SelectOption[] }) => {
-    selectOptions.value = res.data.map((item: SelectOption) => ({ label: item[key], value: item[valueKey ?? key] }))
+function search(query: string, key: string, valueKey?: string) {
+  props.api.getList({ [key]: query }).then((res: unknown) => {
+    selectOptions.value = (res as any).data.map((item: any) => ({ label: item[key], value: item[valueKey ?? key] }) as SelectOption)
   })
 }
 
@@ -49,21 +50,26 @@ function FormItemRender(p: { column: FTableColumn<any> }) {
 
   // Support custom component, but need to pass column to component and define model for it
   if (typeof form?.type === 'object' && form?.type?.name) {
-    return <form.type v-model={formData.value[form?.formItem?.prop ?? prop]} column={p.column} />
+    return <form.type value={get(formData.value, form?.formItem?.prop ?? prop)} column={p.column} />
   }
+  const key = form?.formItem?.prop ?? prop
   switch (form?.type) {
     case 'input':
-      item = <ElInput v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.input} />
+      item = (
+        <ElInput modelValue={get(formData.value, key)} onInput={(v: string | number) => set(formData.value, key, v)} {...form?.input} />
+      )
       break
     case 'input-number':
-      item = <ElInputNumber v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.inputNumber} />
+      item = (
+        <ElInputNumber modelValue={get(formData.value, key)} {...form?.inputNumber} onChange={(v: number) => set(formData.value, key, v)} />
+      )
       break
     case 'select':
       selectOptions.value = form?.select?.options ?? []
       item = (
         <ElSelect
-          v-model={formData.value[form?.formItem?.prop ?? prop]}
-          remote-method={(query: string) => search(prop, form?.select?.valueKey, query)}
+          modelValue={get(formData.value, key)}
+          remote-method={(query: string) => search(query, prop as string, form?.select?.valueKey)}
           {...form?.select}
         >
           {selectOptions.value?.map((o) => <ElOption label={o.label} value={o.value} />)}
@@ -73,40 +79,40 @@ function FormItemRender(p: { column: FTableColumn<any> }) {
     case 'cascader':
       const { panel, ...cascaderProps } = form?.cascader ?? {}
       item = panel ? (
-        <ElCascaderPanel v-model={formData.value[form?.formItem?.prop ?? prop]} {...cascaderProps} />
+        <ElCascaderPanel modelValue={get(formData.value, key)} {...cascaderProps} />
       ) : (
-        <ElCascader v-model={formData.value[form?.formItem?.prop ?? prop]} {...cascaderProps} />
+        <ElCascader modelValue={get(formData.value, key)} {...cascaderProps} />
       )
       break
     case 'checkbox':
-      item = <ElCheckbox v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.checkbox} />
+      item = <ElCheckbox modelValue={get(formData.value, key)} {...form?.checkbox} />
       break
     case 'radio':
-      item = <ElRadio v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.radio} />
+      item = <ElRadio modelValue={get(formData.value, key)} {...form?.radio} />
       break
     case 'date-picker':
-      item = <ElDatePicker v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.datePicker} />
+      item = <ElDatePicker modelValue={get(formData.value, key)} {...form?.datePicker} />
       break
     case 'time-picker':
-      item = <ElTimePicker v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.timePicker} />
+      item = <ElTimePicker modelValue={get(formData.value, key)} {...form?.timePicker} />
       break
     case 'switch':
-      item = <ElSwitch v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.switch} />
+      item = <ElSwitch modelValue={get(formData.value, key)} {...form?.switch} />
       break
     case 'slider':
-      item = <ElSlider v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.slider} />
+      item = <ElSlider modelValue={get(formData.value, key)} {...form?.slider} />
       break
     case 'rate':
-      item = <ElRate v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.rate} />
+      item = <ElRate modelValue={get(formData.value, key)} {...form?.rate} />
       break
     case 'color-picker':
-      item = <ElColorPicker v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.colorPicker} />
+      item = <ElColorPicker modelValue={get(formData.value, key)} {...form?.colorPicker} />
       break
     case 'transfer':
-      item = <ElTransfer v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.transfer} />
+      item = <ElTransfer modelValue={get(formData.value, key)} {...form?.transfer} />
       break
     case 'upload':
-      item = <ElUpload v-model={formData.value[form?.formItem?.prop ?? prop]} {...form?.upload} />
+      item = <ElUpload modelValue={get(formData.value, key)} {...form?.upload} />
       break
 
     default:
