@@ -1,6 +1,6 @@
 <script setup lang="tsx">
 import { type PaginationProps, useLocale, type TableProps } from 'element-plus'
-import { type VNode, onMounted, ref, watchEffect, defineProps, computed, reactive } from 'vue'
+import { type VNode, onMounted, ref, watchEffect, computed, reactive } from 'vue'
 import { i18n } from './i18n'
 import { FTableColumn } from './types'
 import Form from './Form.vue'
@@ -44,11 +44,13 @@ function getData(params?: Record<string, any>) {
     pagination.pageSize = per_page
   })
 }
+
 function handleAdd() {
   formVisible.value = true
   mode.value = 'add'
   formData.value = {}
 }
+
 function handleEdit(row: any) {
   formVisible.value = true
   mode.value = 'edit'

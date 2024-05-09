@@ -1,7 +1,6 @@
 <script setup lang="tsx">
 import { ElFormItem } from 'element-plus'
 import { FTableColumn } from './types'
-import { defineProps } from 'vue'
 import { get } from 'lodash-es'
 import getFormItem from './form_controls'
 
