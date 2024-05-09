@@ -16,19 +16,8 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['vue'],
-      output: {
-        globals: {
-          vue: 'Vue',
-        },
-      },
+      external: ['vue', 'element-plus'],
     },
-  },
-  resolve: {
-    alias: {
-      '@fcurd/element': new URL('./core', import.meta.url).pathname,
-    },
-    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue', '.less'],
   },
   server: {
     proxy: {

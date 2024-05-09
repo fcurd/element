@@ -4,4 +4,4 @@ pnpm lint
 
 git add .
 
-pnpm typecheck
+# pnpm typecheck

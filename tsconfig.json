@@ -10,6 +10,7 @@
     "esModuleInterop": true,
     // 在文件名中强制使用一致的大小写
     "forceConsistentCasingInFileNames": true,
+    "allowDuplicateProperties": true,
     // 模块解析策略
     "moduleResolution": "Bundler",
     // 允许导入 JSON 模块
@@ -22,11 +23,7 @@
       "dom",
       "esnext"
     ],
-    "paths": {
-      "@fcurd/element": [
-        "./core"
-      ],
-    },
+    "paths": {},
     "types": [
       "@vue/test-utils",
       "vitest"
@@ -35,13 +32,17 @@
   },
   // 需要编译的文件或目录
   "include": [
-    "core"
-, "example/axios.ts"  ],
+    "core/**/*",
+    "example",
+    "vite.config.ts"
+  ],
   // 排除的文件或目录
   "exclude": [
     "node_modules",
     "dist",
-    "**/__tests__/**"
+    "**/__tests__/**",
+    "example",
+    "vite.config.ts"
   ],
   "compileOnSave": false
 }

@@ -15,7 +15,7 @@
     }
   },
   "repository": {
-    "url": "https://github.com/v-vibe/vue-styled-components.git"
+    "url": "https://github.com/fcurd/element.git"
   },
   "scripts": {
     "dev": "pnpm -C example dev",
@@ -38,6 +38,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
+    "@fcurd/request": "1.0.0-beta.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
