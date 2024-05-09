@@ -1,24 +1,27 @@
 import { ComponentInstance, VNode } from 'vue'
 import {
-  CascaderProps,
+  cascaderProps,
   CheckboxProps,
   ColorPickerProps,
   DatePickerProps,
   FormItemProps,
   InputNumberProps,
   InputProps,
-  ISelectV2Props,
   Options,
   RadioProps,
   RateProps,
+  SelectProps,
   SliderProps,
   SwitchProps,
   TableColumnCtx,
+  TimePickerDefaultProps,
   TransferProps,
   UploadProps,
 } from 'element-plus'
 import { FilterMethods, Filters } from 'element-plus/es/components/table/src/table-column/defaults'
 import { TableOverflowTooltipOptions } from 'element-plus/es/components/table/src/util'
+import type { ExtractPublicPropTypes } from 'vue'
+import { SelectProps } from 'element-plus/es/components/select-v2/src/defaults.mjs'
 
 interface BaseColumn<T> {
   type?: string
@@ -73,22 +76,22 @@ export interface FTableColumn<T> extends BaseColumn<T> {
       | 'transfer'
       | ((column: FTableColumn<any>) => VNode | JSX.Element)
       | ComponentInstance<any>
-    input?: InputProps
-    inputNumber?: InputNumberProps
-    select?: ISelectV2Props & { options?: Options }
-    cascader?: CascaderProps & { panel?: boolean }
-    colorPicker?: ColorPickerProps
-    datePicker?: DatePickerProps
-    radio?: RadioProps
-    checkbox?: CheckboxProps
-    rate?: RateProps
-    slider?: SliderProps
-    switch?: SwitchProps
-    timePicker?: TimePickerProps
-    transfer?: TransferProps
-    upload?: UploadProps
+    input?: ExtractPublicPropTypes<InputProps>
+    inputNumber?: ExtractPublicPropTypes<InputNumberProps>
+    select?: ExtractPublicPropTypes<SelectProps> & { options?: Options }
+    cascader?: ExtractPublicPropTypes<typeof cascaderProps> & { panel?: boolean }
+    colorPicker?: ExtractPublicPropTypes<ColorPickerProps>
+    datePicker?: ExtractPublicPropTypes<DatePickerProps>
+    radio?: ExtractPublicPropTypes<RadioProps>
+    checkbox?: ExtractPublicPropTypes<CheckboxProps>
+    rate?: ExtractPublicPropTypes<RateProps>
+    slider?: ExtractPublicPropTypes<SliderProps>
+    switch?: ExtractPublicPropTypes<SwitchProps>
+    timePicker?: ExtractPublicPropTypes<TimePickerDefaultProps>
+    transfer?: ExtractPublicPropTypes<TransferProps>
+    upload?: ExtractPublicPropTypes<UploadProps>
 
-    formItem?: FormItemProps
+    formItem?: ExtractPublicPropTypes<FormItemProps>
   }
   [key: string]: any
 }
